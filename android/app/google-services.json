@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "549026546167",
+    "project_id": "bustle-beats",
+    "storage_bucket": "bustle-beats.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:549026546167:android:40573b3224ba4a3d4e6ef2",
+        "android_client_info": {
+          "package_name": "com.example.bustle_beats"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "549026546167-0g9r9qh3dgvtto8e3anfkt7ortr4idn8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB74cBgkqWC6vpb797E-EWRLsp7rOvWIwQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "549026546167-0g9r9qh3dgvtto8e3anfkt7ortr4idn8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

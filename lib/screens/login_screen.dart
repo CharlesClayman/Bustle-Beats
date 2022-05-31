@@ -12,7 +12,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginWithPhoneState extends State<LoginScreen> {
   TextEditingController phoneController = TextEditingController();
-  // TextEditingController(text: "+923028997122");
+
   TextEditingController otpController = TextEditingController();
 
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -32,83 +32,109 @@ class _LoginWithPhoneState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        margin: const EdgeInsets.all(10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              'Welcome to Bustle Beats',
-              style: TextStyle(color: secondaryAppColor, fontSize: 30),
-            ),
-            const SizedBox(
-              height: 150,
-            ),
-            TextField(
-              controller: phoneController,
-              decoration: const InputDecoration(
-                  labelText: "Phone number",
-                  hintText: "e.g +233573456732",
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: secondaryAppColor),
-                  )),
-              keyboardType: TextInputType.phone,
-            ),
-            Visibility(
-              visible: otpVisibility,
-              child: TextField(
-                controller: otpController,
-                decoration: const InputDecoration(
-                    labelText: 'OTP',
-                    hintText: 'Enter OTP',
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: secondaryAppColor),
-                    )),
-                keyboardType: TextInputType.number,
-              ),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            // ElevatedButton(
-            //     onPressed: () {
-            //       if (otpVisibility) {
-            //         verifyOTP();
-            //       } else {
-            //         loginWithPhone();
-            //       }
-            //     },
-            //     child: Text(otpVisibility ? "Verify" : "Login")),
-            InkWell(
+      body: Stack(
+        children: [
+          Container(
+            height: double.infinity,
+            width: double.infinity,
+            decoration: const BoxDecoration(
+                shape: BoxShape.rectangle,
+                image: DecorationImage(
+                    image: AssetImage('assets/splashImage.jpg'),
+                    fit: BoxFit.cover)),
+          ),
+          Positioned.fill(
               child: Container(
-                width: double.infinity,
-                alignment: Alignment.center,
-                padding: const EdgeInsets.symmetric(vertical: 12),
-                decoration: const ShapeDecoration(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(4)),
-                  ),
-                  color: secondaryAppColor,
-                ),
-                child: !_isLoading
-                    ? Text(
-                        otpVisibility ? "Verify" : "Login",
-                        style: const TextStyle(fontSize: 20),
-                      )
-                    : const CircularProgressIndicator(
-                        color: Colors.white,
+            decoration: BoxDecoration(color: Colors.black.withOpacity(0.7)),
+            child: Container(
+              margin: const EdgeInsets.all(10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    margin: EdgeInsets.symmetric(
+                        horizontal: MediaQuery.of(context).size.width * 0.07),
+                    child: const FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        'Welcome to Bustle Beats',
+                        style:
+                            TextStyle(color: secondaryAppColor, fontSize: 35),
                       ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.15,
+                  ),
+                  Container(
+                    margin: EdgeInsets.symmetric(
+                        horizontal: MediaQuery.of(context).size.width * 0.07),
+                    child: TextField(
+                      controller: phoneController,
+                      decoration: const InputDecoration(
+                          labelText: "Phone number",
+                          hintText: "e.g +233573456732",
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: secondaryAppColor),
+                          )),
+                      keyboardType: TextInputType.phone,
+                    ),
+                  ),
+                  Visibility(
+                    visible: otpVisibility,
+                    child: Container(
+                      margin: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.of(context).size.width * 0.07),
+                      child: TextField(
+                        controller: otpController,
+                        decoration: const InputDecoration(
+                            labelText: 'OTP',
+                            hintText: 'Enter OTP',
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: secondaryAppColor),
+                            )),
+                        keyboardType: TextInputType.number,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.07,
+                  ),
+                  InkWell(
+                    child: Container(
+                      width: double.infinity,
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.symmetric(vertical: 15),
+                      margin: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.of(context).size.width * 0.2),
+                      decoration: const ShapeDecoration(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                        ),
+                        color: secondaryAppColor,
+                      ),
+                      child: !_isLoading
+                          ? Text(
+                              otpVisibility ? "Verify" : "Login",
+                              style: TextStyle(fontSize: 18),
+                            )
+                          : const CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
+                    ),
+                    onTap: () {
+                      if (otpVisibility) {
+                        verifyOTP();
+                      } else {
+                        loginWithPhone();
+                      }
+                    },
+                  ),
+                ],
               ),
-              onTap: () {
-                if (otpVisibility) {
-                  verifyOTP();
-                } else {
-                  loginWithPhone();
-                }
-              },
             ),
-          ],
-        ),
+          )),
+        ],
       ),
     );
   }

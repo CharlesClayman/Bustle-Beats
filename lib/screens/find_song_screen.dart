@@ -1,6 +1,8 @@
 import 'dart:ui';
 
+import 'package:blurrycontainer/blurrycontainer.dart';
 import 'package:bustle_beats/models/commercial.dart';
+import 'package:bustle_beats/screens/artist_profile_screen.dart';
 import 'package:bustle_beats/utils/colors.dart';
 import 'package:bustle_beats/utils/photo_urls.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +34,7 @@ class FindSongScreen extends StatelessWidget {
             actions: [
               //Search button
               IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
-              //Shopping cart
+              //Shopping cart icon with badge
               IconButton(
                 onPressed: () {},
                 icon: Stack(children: <Widget>[
@@ -66,20 +68,21 @@ class FindSongScreen extends StatelessWidget {
             shape: BoxShape.rectangle,
           ),
           child: Container(
-            margin: EdgeInsets.symmetric(horizontal: 20),
+            margin: const EdgeInsets.symmetric(horizontal: 25),
             child: Column(
               children: [
                 Container(
-                  margin:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                  child: const Text(
-                    'Find the best music for your banger',
-                    style: TextStyle(fontSize: 30),
+                  margin: const EdgeInsets.symmetric(vertical: 10),
+                  child: const FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      'Find the best music for your banger',
+                      style: TextStyle(fontSize: 35),
+                    ),
                   ),
                 ),
                 Container(
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                  margin: const EdgeInsets.symmetric(vertical: 10),
                   color: Colors.transparent,
                   child: TextField(
                     decoration: InputDecoration(
@@ -138,27 +141,41 @@ class FindSongScreen extends StatelessWidget {
                                   ),
                                   itemCount: commercials().length,
                                   itemBuilder: (context, index) {
-                                    return Stack(
-                                      children: [
-                                        CircleAvatar(
-                                          radius: 90,
-                                          backgroundImage: NetworkImage(
-                                              commercials()[index].photoUrl!),
-                                        ),
-                                        Positioned(
-                                            left: 55,
-                                            right: 25,
-                                            top: 80,
-                                            child: Text(
-                                              commercials()[index].name!,
-                                              style: const TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 20),
-                                            ))
-                                      ],
+                                    return InkWell(
+                                      onTap: () => Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ProfileScreen(
+                                                    artistName:
+                                                        commercials()[index]
+                                                            .name,
+                                                    artistPhotoUrl:
+                                                        commercials()[index]
+                                                            .photoUrl,
+                                                  ))),
+                                      child: Stack(
+                                        children: [
+                                          CircleAvatar(
+                                            radius: 90,
+                                            backgroundImage: NetworkImage(
+                                                commercials()[index].photoUrl!),
+                                          ),
+                                          Positioned(
+                                              left: 55,
+                                              right: 25,
+                                              top: 80,
+                                              child: Text(
+                                                commercials()[index].name!,
+                                                style: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 20),
+                                              ))
+                                        ],
+                                      ),
                                     );
                                   }),
-                              Text('License'),
+                              const Text('License'),
                             ]),
                           )
                         ],
@@ -168,49 +185,39 @@ class FindSongScreen extends StatelessWidget {
             ),
           ),
         ),
-        bottomNavigationBar: SizedBox(
-          height: 100,
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              //  Image.asset('chocolate_image', fit: BoxFit.cover),
-              ImageFiltered(
-                imageFilter: ImageFilter.blur(
-                    sigmaY: 5,
-                    sigmaX: 5), //SigmaX and Y are just for X and Y directions
-                child: Image.asset(
-                    ''), //here you can use any widget you'd like to blur .
-              ),
-              Container(
-                color: Colors.grey.withOpacity(0.1),
-                alignment: Alignment.center,
-                child: BottomNavigationBar(
-                  backgroundColor: Colors.black,
-                  selectedItemColor: secondaryAppColor,
-                  currentIndex: 1,
-                  onTap: (value) {},
-                  items: const [
-                    BottomNavigationBarItem(
-                      label: 'Home',
-                      icon: Icon(Icons.home_outlined),
-                    ),
-                    BottomNavigationBarItem(
-                        label: 'Navigator',
-                        icon: Icon(
-                          Icons.navigation_outlined,
-                        )),
-                    BottomNavigationBarItem(
-                      label: 'Chats',
-                      icon: Icon(Icons.chat_outlined),
-                    ),
-                    BottomNavigationBarItem(
-                      label: 'Profile',
-                      icon: Icon(Icons.person_outline),
-                    ),
-                  ],
+        bottomNavigationBar: BlurryContainer(
+          color: Colors.black.withOpacity(0.8),
+          blur: 1,
+          height: 120,
+          width: double.infinity,
+          borderRadius: const BorderRadius.all(Radius.circular(0)),
+          child: SizedBox(
+            height: 58,
+            child: BottomNavigationBar(
+              backgroundColor: Colors.black,
+              selectedItemColor: secondaryAppColor,
+              currentIndex: 1,
+              onTap: (value) {},
+              items: const [
+                BottomNavigationBarItem(
+                  label: 'Home',
+                  icon: Icon(Icons.home_outlined),
                 ),
-              ),
-            ],
+                BottomNavigationBarItem(
+                    label: 'Navigator',
+                    icon: Icon(
+                      Icons.navigation_outlined,
+                    )),
+                BottomNavigationBarItem(
+                  label: 'Chats',
+                  icon: Icon(Icons.chat_outlined),
+                ),
+                BottomNavigationBarItem(
+                  label: 'Profile',
+                  icon: Icon(Icons.person_outline),
+                ),
+              ],
+            ),
           ),
         ));
   }

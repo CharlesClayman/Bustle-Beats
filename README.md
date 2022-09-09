@@ -1,6 +1,6 @@
 # bustle_beats
 
-A new Flutter project.
+A flutter mobile app ui for beat producers to commercialize and promote their works.
 
 ## Getting Started
 
